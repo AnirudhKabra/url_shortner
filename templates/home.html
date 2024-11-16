@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>URL Shortner</title>
+</head>
+<body>
+
+    <div>
+        <h1>URL Shortner</h1>
+
+        {%  for message in get_flashed_messages() %}
+        <h2>{{message}}</h2>
+        {%endfor%}
+        
+    </div>
+
+    <div>
+        <form action="your-url" method="post">
+
+            <label for="url">Website URL</label>
+                <input type="url" name="url" value="" required>
+                <br>
+                <label for="code"> Short Name</label>
+                <input type="text" name="code" value="" required>
+                <br>
+                <input type="submit" value="Shorten">
+    
+        </form>  
+
+    </div>
+
+    <div>
+        {% if codes %}
+    <h2>Codes you have created</h2>
+
+    <ul>
+        {% for code in codes %}
+        <a href="{{url_for('redirect_to_url', code = code)}}">
+        <li>{{code}}</li>
+        </a>
+
+        {%endfor%}
+    </ul>
+    {%endif%}
+
+    </div>
+    
+</body>
+</html>
