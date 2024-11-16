@@ -2,49 +2,135 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>URL Shortner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #0066cc;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        /* Form container */
+        div {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        label {
+            font-size: 16px;
+            margin: 10px 0;
+            display: block;
+        }
+
+        input[type="url"],
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        input[type="submit"] {
+            background-color: #0066cc;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #005bb5;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .flash-messages {
+            color: #d9534f;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
     <div>
-        <h1>URL Shortner</h1>
+        <h1>URL Shortener</h1>
 
-        {%  for message in get_flashed_messages() %}
-        <h2>{{message}}</h2>
-        {%endfor%}
-        
+        {% for message in get_flashed_messages() %}
+        <h2 class="flash-messages">{{ message }}</h2>
+        {% endfor %}
     </div>
 
     <div>
         <form action="your-url" method="post">
-
             <label for="url">Website URL</label>
-                <input type="url" name="url" value="" required>
-                <br>
-                <label for="code"> Short Name</label>
-                <input type="text" name="code" value="" required>
-                <br>
-                <input type="submit" value="Shorten">
-    
-        </form>  
+            <input type="url" name="url" placeholder="Enter your URL" required>
 
+            <label for="code">Short Name</label>
+            <input type="text" name="code" placeholder="Enter a short name" required>
+
+            <input type="submit" value="Shorten">
+        </form>
     </div>
 
     <div>
         {% if codes %}
-    <h2>Codes you have created</h2>
-
-    <ul>
-        {% for code in codes %}
-        <a href="{{url_for('redirect_to_url', code = code)}}">
-        <li>{{code}}</li>
-        </a>
-
-        {%endfor%}
-    </ul>
-    {%endif%}
-
+        <h2>Codes You Have Created</h2>
+        <ul>
+            {% for code in codes %}
+            <li>
+                <a href="{{ url_for('redirect_to_url', code=code) }}">{{ code }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
     </div>
-    
+
 </body>
 </html>
